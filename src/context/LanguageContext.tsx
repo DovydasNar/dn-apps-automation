@@ -40,7 +40,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       const response = await fetch("/api/content", { cache: "no-store" });
       if (!response.ok) return;
       const data = (await response.json()) as SiteContent;
-      setContent(data);
+      // Guard against stale Redis payloads missing new portfolio fields.
+      if (
+        data?.locales?.lt?.portfolio?.projects &&
+        data?.locales?.en?.portfolio?.projects
+      ) {
+        setContent(data);
+      }
     } catch {
       // keep current/default content
     } finally {

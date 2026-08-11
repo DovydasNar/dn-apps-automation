@@ -1,14 +1,77 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { Redis } from "@upstash/redis";
-import { defaultContent, type SiteContent } from "@/lib/i18n";
+import {
+  defaultContent,
+  type Dictionary,
+  type SiteContent,
+} from "@/lib/i18n";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const CONTENT_PATH = path.join(DATA_DIR, "site-content.json");
 const REDIS_KEY = "dn:site-content";
 
+type PortfolioProject = Dictionary["portfolio"]["projects"][number];
+
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function normalizePortfolioProject(
+  project: unknown,
+  fallback: PortfolioProject,
+): PortfolioProject {
+  if (!isObject(project)) return { ...fallback };
+
+  const hasNewShape =
+    typeof project.category === "string" &&
+    typeof project.impact === "string" &&
+    Array.isArray(project.tags);
+
+  // Old progress-based cards would crash the UI — migrate to defaults.
+  if (!hasNewShape) return { ...fallback };
+
+  return {
+    category: project.category as string,
+    name:
+      typeof project.name === "string" && project.name.trim()
+        ? project.name
+        : fallback.name,
+    summary:
+      typeof project.summary === "string" && project.summary.trim()
+        ? project.summary
+        : fallback.summary,
+    impact: project.impact as string,
+    tags: (project.tags as unknown[])
+      .filter((tag): tag is string => typeof tag === "string" && Boolean(tag.trim()))
+      .map((tag) => tag.trim()),
+  };
+}
+
+function normalizeLocale(locale: Dictionary, defaults: Dictionary): Dictionary {
+  const fallbackProjects = defaults.portfolio.projects;
+  const rawProjects = Array.isArray(locale.portfolio.projects)
+    ? locale.portfolio.projects
+    : fallbackProjects;
+
+  const projects =
+    rawProjects.length > 0
+      ? rawProjects.map((project, index) =>
+          normalizePortfolioProject(
+            project,
+            fallbackProjects[index] ?? fallbackProjects[0],
+          ),
+        )
+      : fallbackProjects.map((project) => ({ ...project }));
+
+  return {
+    ...locale,
+    portfolio: {
+      title: locale.portfolio.title || defaults.portfolio.title,
+      subtitle: locale.portfolio.subtitle || defaults.portfolio.subtitle,
+      projects,
+    },
+  };
 }
 
 export function mergeContent(raw: unknown): SiteContent {
@@ -24,8 +87,8 @@ export function mergeContent(raw: unknown): SiteContent {
       ...(settings as Partial<SiteContent["settings"]>),
     },
     locales: {
-      lt: deepMerge(base.locales.lt, locales.lt),
-      en: deepMerge(base.locales.en, locales.en),
+      lt: normalizeLocale(deepMerge(base.locales.lt, locales.lt), base.locales.lt),
+      en: normalizeLocale(deepMerge(base.locales.en, locales.en), base.locales.en),
     },
   };
 }
@@ -92,11 +155,13 @@ async function readFromRedis(): Promise<SiteContent> {
     return seeded;
   }
 
-  if (typeof raw === "string") {
-    return mergeContent(JSON.parse(raw));
-  }
+  const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
+  const merged = mergeContent(parsed);
 
-  return mergeContent(raw);
+  // Persist migrated schema (e.g. portfolio cards) so clients stop receiving stale shapes.
+  await redis.set(REDIS_KEY, merged);
+
+  return merged;
 }
 
 async function writeToRedis(content: SiteContent): Promise<void> {
