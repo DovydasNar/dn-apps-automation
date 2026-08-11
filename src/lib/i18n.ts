@@ -23,11 +23,12 @@ export type Dictionary = {
   portfolio: {
     title: string;
     subtitle: string;
-    progressLabel: string;
     projects: {
+      category: string;
       name: string;
       summary: string;
-      progress: number;
+      impact: string;
+      tags: string[];
     }[];
   };
   about: {
@@ -151,27 +152,33 @@ export const defaultContent: SiteContent = {
         ],
       },
       portfolio: {
-        title: "Atliekami darbai",
-        subtitle: "Trumpai — ką kuriu dabar ir kiek toli pažengę projektai.",
-        progressLabel: "Progresas",
+        title: "Atlikti darbai",
+        subtitle:
+          "Realūs technologiniai sprendimai, sprendžiantys verslo iššūkius.",
         projects: [
           {
-            name: "Užsakymų valdymo ir sąskaitų generavimo aplikacija",
+            category: "Mobilioji Aplikacija",
+            name: "Užsakymų ir sąskaitų valdymo sistema",
             summary:
-              "Mobili aplikacija užsakymams vietoje ir automatiniam sąskaitų perdavimui į buhalteriją — be rankinio perkėlinėjimo.",
-            progress: 90,
+              "Mobilus sprendimas darbuotojams, leidžiantis vietoje įvesti užsakymą ir akimirksniu automatiškai sugeneruoti bei išsiųsti sąskaitą buhalterijai.",
+            impact: "⚡ 0% popierizmo ir momentinis sąskaitų generavimas",
+            tags: ["React Native", "Node.js", "Buhalterinė integracija"],
           },
           {
-            name: "Logistikos duomenų išgavimo (Scraping) Botas",
+            category: "Web Scraping & Botai",
+            name: "Logistikos konteinerių duomenų botas",
             summary:
-              "Botas, kuris pagal konteinerių numerius automatiškai surenka automobilių duomenis iš nurodytų sistemų.",
-            progress: 95,
+              "Automatizuotas botas, pagal konteinerių numerius savarankiškai išgaunantis ir sutikrinantis automobilių duomenis iš skirtingų klientų sistemų.",
+            impact: "⏱️ Sutaupoma 10+ valandų rutininio darbo kas savaitę",
+            tags: ["Python", "Django", "Web Scraping", "Automation"],
           },
           {
-            name: "Specializuotos B2B ir C2C platformos",
+            category: "Web Platformos",
+            name: "B2B ir C2C specializuotos platformos",
             summary:
-              "Autovežių užsakymų valdymo sistema ir automobilių dalių e-prekybos platforma specifinėms verslo nišoms.",
-            progress: 60,
+              "Autovežių užsakymų valdymo sistema bei specializuota autodalių prekybos platforma, valdanti sudėtingą vidinę logiką.",
+            impact: "🚀 Pilnas užsakymų ciklų ir duomenų valdymas",
+            tags: ["React", "Node.js", "Django", "Tailwind CSS"],
           },
         ],
       },
@@ -253,28 +260,33 @@ export const defaultContent: SiteContent = {
         ],
       },
       portfolio: {
-        title: "Work in progress",
+        title: "Completed work",
         subtitle:
-          "A quick look at what I’m building now and how far each project has come.",
-        progressLabel: "Progress",
+          "Real technology solutions that solve business challenges.",
         projects: [
           {
-            name: "Order management & invoice generation app",
+            category: "Mobile Application",
+            name: "Order and invoice management system",
             summary:
-              "A mobile app for on-site orders with automatic invoice delivery to accounting — no double data entry.",
-            progress: 90,
+              "A mobile solution for staff to enter orders on site and instantly generate and send invoices to accounting.",
+            impact: "⚡ 0% paperwork and instant invoice generation",
+            tags: ["React Native", "Node.js", "Accounting integration"],
           },
           {
-            name: "Logistics data extraction (scraping) bot",
+            category: "Web Scraping & Bots",
+            name: "Logistics container data bot",
             summary:
-              "A bot that takes container numbers and automatically pulls vehicle data from the connected systems.",
-            progress: 95,
+              "An automated bot that independently extracts and cross-checks vehicle data from different client systems by container numbers.",
+            impact: "⏱️ Saves 10+ hours of routine work every week",
+            tags: ["Python", "Django", "Web Scraping", "Automation"],
           },
           {
+            category: "Web Platforms",
             name: "Specialized B2B and C2C platforms",
             summary:
-              "A car-carrier order management system and an auto-parts marketplace tailored to niche business needs.",
-            progress: 60,
+              "A car-carrier order management system and a specialized auto-parts marketplace handling complex internal logic.",
+            impact: "🚀 Full order-cycle and data management",
+            tags: ["React", "Node.js", "Django", "Tailwind CSS"],
           },
         ],
       },
