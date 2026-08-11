@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { FadeIn } from "@/components/FadeIn";
 import { SectionHeading } from "@/components/SectionHeading";
 import { useLanguage } from "@/context/LanguageContext";
@@ -21,6 +22,10 @@ export function Portfolio() {
         <ul className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {t.portfolio.projects.map((project, index) => {
             const tags = Array.isArray(project.tags) ? project.tags : [];
+            const progress = Math.max(
+              0,
+              Math.min(100, Number(project.progress) || 0),
+            );
 
             return (
               <FadeIn
@@ -52,18 +57,44 @@ export function Portfolio() {
                     ) : null}
                   </div>
 
-                  {tags.length > 0 ? (
-                    <ul className="mt-6 flex flex-wrap gap-2">
-                      {tags.map((tag) => (
-                        <li
-                          key={tag}
-                          className="rounded-full border border-border bg-background/60 px-2.5 py-1 text-xs text-slate-400"
-                        >
-                          {tag}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
+                  <div className="mt-6 space-y-5">
+                    <div>
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <span className="text-xs uppercase tracking-[0.14em] text-muted">
+                          {t.portfolio.progressLabel}
+                        </span>
+                        <span className="text-sm font-semibold tabular-nums text-accent">
+                          {progress}%
+                        </span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-background/80 ring-1 ring-border">
+                        <motion.div
+                          className="h-full rounded-full bg-gradient-to-r from-accent via-cyan-300 to-accent-secondary shadow-[0_0_18px_rgba(34,211,238,0.55)]"
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${progress}%` }}
+                          viewport={{ once: true, amount: 0.6 }}
+                          transition={{
+                            duration: 1,
+                            delay: 0.1 + index * 0.08,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {tags.length > 0 ? (
+                      <ul className="flex flex-wrap gap-2">
+                        {tags.map((tag) => (
+                          <li
+                            key={tag}
+                            className="rounded-full border border-border bg-background/60 px-2.5 py-1 text-xs text-slate-400"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
                 </article>
               </FadeIn>
             );

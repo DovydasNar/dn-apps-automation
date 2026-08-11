@@ -538,7 +538,7 @@ export function AdminApp() {
           {tab === "portfolio" ? (
             <AdminSection
               title="Atlikti darbai"
-              description="Kortelės su kategorija, aprašymu, rezultatu ir technologijomis."
+              description="Pilnas kortelių valdymas: kategorija, aprašymas, rezultatas, progresas ir technologijos."
             >
               <AdminField
                 label="Sekcijos pavadinimas"
@@ -558,6 +558,16 @@ export function AdminApp() {
                   updateLocale((current) => ({
                     ...current,
                     portfolio: { ...current.portfolio, subtitle },
+                  }))
+                }
+              />
+              <AdminField
+                label="Progreso etiketė"
+                value={dict.portfolio.progressLabel}
+                onChange={(progressLabel) =>
+                  updateLocale((current) => ({
+                    ...current,
+                    portfolio: { ...current.portfolio, progressLabel },
                   }))
                 }
               />
@@ -590,7 +600,7 @@ export function AdminApp() {
                     </button>
                   </div>
                   <AdminField
-                    label="Kategorija"
+                    label="Kategorija (badge)"
                     value={project.category}
                     onChange={(category) =>
                       updateLocale((current) => {
@@ -633,7 +643,7 @@ export function AdminApp() {
                     }
                   />
                   <AdminField
-                    label="Rezultatas / poveikis"
+                    label="Rezultatas / poveikis (impact)"
                     value={project.impact}
                     onChange={(impact) =>
                       updateLocale((current) => {
@@ -647,8 +657,27 @@ export function AdminApp() {
                     }
                   />
                   <AdminField
+                    label="Progresas (%)"
+                    type="number"
+                    value={String(project.progress ?? 0)}
+                    onChange={(value) =>
+                      updateLocale((current) => {
+                        const projects = [...current.portfolio.projects];
+                        const progress = Math.max(
+                          0,
+                          Math.min(100, Number(value) || 0),
+                        );
+                        projects[index] = { ...projects[index], progress };
+                        return {
+                          ...current,
+                          portfolio: { ...current.portfolio, projects },
+                        };
+                      })
+                    }
+                  />
+                  <AdminField
                     label="Technologijos (atskirtos kableliu)"
-                    value={project.tags.join(", ")}
+                    value={(project.tags ?? []).join(", ")}
                     onChange={(value) =>
                       updateLocale((current) => {
                         const projects = [...current.portfolio.projects];
@@ -685,6 +714,7 @@ export function AdminApp() {
                           summary: "",
                           impact: "",
                           tags: [],
+                          progress: 10,
                         },
                       ],
                     },

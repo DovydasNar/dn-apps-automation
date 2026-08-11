@@ -46,27 +46,31 @@
       "portfolio": {
         "title": "Atlikti darbai",
         "subtitle": "Realūs technologiniai sprendimai, sprendžiantys verslo iššūkius.",
+        "progressLabel": "Progresas",
         "projects": [
           {
             "category": "Mobilioji Aplikacija",
             "name": "Užsakymų ir sąskaitų valdymo sistema",
             "summary": "Mobilus sprendimas darbuotojams, leidžiantis vietoje įvesti užsakymą ir akimirksniu automatiškai sugeneruoti bei išsiųsti sąskaitą buhalterijai.",
             "impact": "⚡ 0% popierizmo ir momentinis sąskaitų generavimas",
-            "tags": ["React Native", "Node.js", "Buhalterinė integracija"]
+            "tags": ["React Native", "Node.js", "Buhalterinė integracija"],
+            "progress": 100
           },
           {
             "category": "Web Scraping & Botai",
             "name": "Logistikos konteinerių duomenų botas",
             "summary": "Automatizuotas botas, pagal konteinerių numerius savarankiškai išgaunantis ir sutikrinantis automobilių duomenis iš skirtingų klientų sistemų.",
             "impact": "⏱️ Sutaupoma 10+ valandų rutininio darbo kas savaitę",
-            "tags": ["Python", "Django", "Web Scraping", "Automation"]
+            "tags": ["Python", "Django", "Web Scraping", "Automation"],
+            "progress": 100
           },
           {
             "category": "Web Platformos",
             "name": "B2B ir C2C specializuotos platformos",
             "summary": "Autovežių užsakymų valdymo sistema bei specializuota autodalių prekybos platforma, valdanti sudėtingą vidinę logiką.",
             "impact": "🚀 Pilnas užsakymų ciklų ir duomenų valdymas",
-            "tags": ["React", "Node.js", "Django", "Tailwind CSS"]
+            "tags": ["React", "Node.js", "Django", "Tailwind CSS"],
+            "progress": 60
           }
         ]
       },
@@ -140,27 +144,31 @@
       "portfolio": {
         "title": "Completed work",
         "subtitle": "Real technology solutions that solve business challenges.",
+        "progressLabel": "Progress",
         "projects": [
           {
             "category": "Mobile Application",
             "name": "Order and invoice management system",
             "summary": "A mobile solution for staff to enter orders on site and instantly generate and send invoices to accounting.",
             "impact": "⚡ 0% paperwork and instant invoice generation",
-            "tags": ["React Native", "Node.js", "Accounting integration"]
+            "tags": ["React Native", "Node.js", "Accounting integration"],
+            "progress": 100
           },
           {
             "category": "Web Scraping & Bots",
             "name": "Logistics container data bot",
             "summary": "An automated bot that independently extracts and cross-checks vehicle data from different client systems by container numbers.",
             "impact": "⏱️ Saves 10+ hours of routine work every week",
-            "tags": ["Python", "Django", "Web Scraping", "Automation"]
+            "tags": ["Python", "Django", "Web Scraping", "Automation"],
+            "progress": 100
           },
           {
             "category": "Web Platforms",
             "name": "Specialized B2B and C2C platforms",
             "summary": "A car-carrier order management system and a specialized auto-parts marketplace handling complex internal logic.",
             "impact": "🚀 Full order-cycle and data management",
-            "tags": ["React", "Node.js", "Django", "Tailwind CSS"]
+            "tags": ["React", "Node.js", "Django", "Tailwind CSS"],
+            "progress": 60
           }
         ]
       },

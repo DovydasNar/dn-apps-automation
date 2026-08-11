@@ -28,8 +28,19 @@ function normalizePortfolioProject(
     typeof project.impact === "string" &&
     Array.isArray(project.tags);
 
-  // Old progress-based cards would crash the UI — migrate to defaults.
-  if (!hasNewShape) return { ...fallback };
+  // Old progress-only cards would crash the UI — migrate to defaults.
+  if (!hasNewShape) {
+    const legacyProgress =
+      typeof project.progress === "number"
+        ? Math.max(0, Math.min(100, project.progress))
+        : fallback.progress;
+    return { ...fallback, progress: legacyProgress };
+  }
+
+  const progress =
+    typeof project.progress === "number"
+      ? Math.max(0, Math.min(100, project.progress))
+      : fallback.progress;
 
   return {
     category: project.category as string,
@@ -45,6 +56,7 @@ function normalizePortfolioProject(
     tags: (project.tags as unknown[])
       .filter((tag): tag is string => typeof tag === "string" && Boolean(tag.trim()))
       .map((tag) => tag.trim()),
+    progress,
   };
 }
 
@@ -69,6 +81,8 @@ function normalizeLocale(locale: Dictionary, defaults: Dictionary): Dictionary {
     portfolio: {
       title: locale.portfolio.title || defaults.portfolio.title,
       subtitle: locale.portfolio.subtitle || defaults.portfolio.subtitle,
+      progressLabel:
+        locale.portfolio.progressLabel || defaults.portfolio.progressLabel,
       projects,
     },
   };

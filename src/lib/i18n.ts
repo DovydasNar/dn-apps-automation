@@ -23,12 +23,14 @@ export type Dictionary = {
   portfolio: {
     title: string;
     subtitle: string;
+    progressLabel: string;
     projects: {
       category: string;
       name: string;
       summary: string;
       impact: string;
       tags: string[];
+      progress: number;
     }[];
   };
   about: {
@@ -155,6 +157,7 @@ export const defaultContent: SiteContent = {
         title: "Atlikti darbai",
         subtitle:
           "Realūs technologiniai sprendimai, sprendžiantys verslo iššūkius.",
+        progressLabel: "Progresas",
         projects: [
           {
             category: "Mobilioji Aplikacija",
@@ -163,6 +166,7 @@ export const defaultContent: SiteContent = {
               "Mobilus sprendimas darbuotojams, leidžiantis vietoje įvesti užsakymą ir akimirksniu automatiškai sugeneruoti bei išsiųsti sąskaitą buhalterijai.",
             impact: "⚡ 0% popierizmo ir momentinis sąskaitų generavimas",
             tags: ["React Native", "Node.js", "Buhalterinė integracija"],
+            progress: 100,
           },
           {
             category: "Web Scraping & Botai",
@@ -171,6 +175,7 @@ export const defaultContent: SiteContent = {
               "Automatizuotas botas, pagal konteinerių numerius savarankiškai išgaunantis ir sutikrinantis automobilių duomenis iš skirtingų klientų sistemų.",
             impact: "⏱️ Sutaupoma 10+ valandų rutininio darbo kas savaitę",
             tags: ["Python", "Django", "Web Scraping", "Automation"],
+            progress: 100,
           },
           {
             category: "Web Platformos",
@@ -179,6 +184,7 @@ export const defaultContent: SiteContent = {
               "Autovežių užsakymų valdymo sistema bei specializuota autodalių prekybos platforma, valdanti sudėtingą vidinę logiką.",
             impact: "🚀 Pilnas užsakymų ciklų ir duomenų valdymas",
             tags: ["React", "Node.js", "Django", "Tailwind CSS"],
+            progress: 60,
           },
         ],
       },
@@ -263,6 +269,7 @@ export const defaultContent: SiteContent = {
         title: "Completed work",
         subtitle:
           "Real technology solutions that solve business challenges.",
+        progressLabel: "Progress",
         projects: [
           {
             category: "Mobile Application",
@@ -271,6 +278,7 @@ export const defaultContent: SiteContent = {
               "A mobile solution for staff to enter orders on site and instantly generate and send invoices to accounting.",
             impact: "⚡ 0% paperwork and instant invoice generation",
             tags: ["React Native", "Node.js", "Accounting integration"],
+            progress: 100,
           },
           {
             category: "Web Scraping & Bots",
@@ -279,6 +287,7 @@ export const defaultContent: SiteContent = {
               "An automated bot that independently extracts and cross-checks vehicle data from different client systems by container numbers.",
             impact: "⏱️ Saves 10+ hours of routine work every week",
             tags: ["Python", "Django", "Web Scraping", "Automation"],
+            progress: 100,
           },
           {
             category: "Web Platforms",
@@ -287,6 +296,7 @@ export const defaultContent: SiteContent = {
               "A car-carrier order management system and a specialized auto-parts marketplace handling complex internal logic.",
             impact: "🚀 Full order-cycle and data management",
             tags: ["React", "Node.js", "Django", "Tailwind CSS"],
+            progress: 60,
           },
         ],
       },
