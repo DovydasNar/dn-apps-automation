@@ -12,17 +12,17 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-svh items-center overflow-hidden animated-gradient pt-16"
+      className="relative flex min-h-svh items-start overflow-x-hidden animated-gradient pt-16 lg:items-center"
     >
       <div className="pointer-events-none absolute inset-0 hero-grid" />
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="hero-orb hero-orb-a" />
         <div className="hero-orb hero-orb-b" />
       </div>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
 
-      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-10 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.15fr_0.85fr]">
-        <div>
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-8 px-5 py-14 sm:gap-10 sm:px-8 sm:py-28 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="relative z-20 min-w-0">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -36,7 +36,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.08 }}
-            className="max-w-3xl text-4xl font-semibold leading-[1.12] tracking-tight text-foreground sm:text-5xl lg:text-[3.25rem]"
+            className="max-w-3xl text-[1.85rem] font-semibold leading-[1.15] tracking-tight text-foreground break-words sm:text-5xl lg:text-[3.25rem]"
           >
             {t.hero.h1}
           </motion.h1>
@@ -45,7 +45,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.18 }}
-            className="mt-6 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl"
+            className="mt-5 max-w-2xl text-base leading-relaxed text-muted break-words sm:mt-6 sm:text-xl"
           >
             {t.hero.h2}
           </motion.p>
@@ -54,7 +54,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.28 }}
-            className="mt-10"
+            className="mt-8 sm:mt-10"
           >
             <a
               href={navHrefs.contact}
@@ -73,10 +73,10 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="relative mx-auto flex w-full max-w-md items-center justify-center lg:max-w-none"
+          className="relative z-10 mx-auto flex w-full max-w-[16rem] items-center justify-center sm:max-w-md lg:max-w-none"
         >
-          <div className="absolute inset-8 rounded-full bg-accent/15 blur-3xl" />
-          <div className="glass relative overflow-hidden rounded-[1.75rem] border-accent/20 p-4 shadow-[0_0_60px_rgba(34,211,238,0.18)] sm:p-6">
+          <div className="pointer-events-none absolute inset-8 rounded-full bg-accent/15 blur-3xl" />
+          <div className="glass relative rounded-[1.75rem] border-accent/20 p-3 shadow-[0_0_60px_rgba(34,211,238,0.18)] sm:p-6">
             <Image
               src="/logo.png"
               alt={settings.brandName}

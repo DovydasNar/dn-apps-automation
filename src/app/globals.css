@@ -46,6 +46,8 @@ body {
   border: 1px solid var(--border);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+  /* Keep card content fully visible on mobile (no clip under rounded edges) */
+  overflow: visible;
 }
 
 .glow-border {

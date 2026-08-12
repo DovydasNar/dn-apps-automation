@@ -6,6 +6,19 @@ import { FadeIn } from "@/components/FadeIn";
 import { SectionHeading } from "@/components/SectionHeading";
 import { useLanguage } from "@/context/LanguageContext";
 
+const formStatusCopy = {
+  lt: {
+    submitting: "Siunčiama…",
+    sent: "Sėkmingai išsiųsta!",
+    error: "Klaida. Nepavyko išsiųsti žinutės.",
+  },
+  en: {
+    submitting: "Sending…",
+    sent: "Sent successfully!",
+    error: "Error. Could not send the message.",
+  },
+} as const;
+
 function LinkedInIcon({ size = 18 }: { size?: number }) {
   return (
     <svg
@@ -49,7 +62,8 @@ function TelegramIcon({ size = 18 }: { size?: number }) {
 }
 
 export function Contact() {
-  const { t, settings } = useLanguage();
+  const { t, settings, locale } = useLanguage();
+  const statusCopy = formStatusCopy[locale];
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
     "idle",
   );
@@ -169,7 +183,7 @@ export function Contact() {
           <FadeIn className="lg:col-span-3" delay={0.05}>
             <form
               onSubmit={handleSubmit}
-              className="glass glow-border rounded-2xl p-6 sm:p-8"
+              className="glass glow-border min-w-0 rounded-2xl p-5 sm:p-8"
             >
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field
@@ -213,23 +227,23 @@ export function Contact() {
                   disabled={status === "sending"}
                   className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-accent/15 px-6 py-3 text-sm font-medium text-accent shadow-[0_0_28px_rgba(34,211,238,0.22)] transition hover:border-accent hover:bg-accent/25 hover:shadow-[0_0_40px_rgba(34,211,238,0.4)] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {status === "sending" ? t.contact.submitting : t.contact.submit}
+                  {status === "sending" ? statusCopy.submitting : t.contact.submit}
                   <Send size={16} />
                 </button>
                 {status === "sent" ? (
                   <p className="text-sm text-accent-secondary">
-                    {t.contact.submitted}
+                    {statusCopy.sent}
                   </p>
                 ) : null}
                 {status === "error" ? (
-                  <p className="text-sm text-red-400">{t.contact.error}</p>
+                  <p className="text-sm text-red-400">{statusCopy.error}</p>
                 ) : null}
               </div>
             </form>
           </FadeIn>
 
           <FadeIn className="lg:col-span-2" delay={0.12}>
-            <div className="glass glow-border flex h-full flex-col justify-between gap-8 rounded-2xl p-6 sm:p-8">
+            <div className="glass glow-border flex h-full min-w-0 flex-col justify-between gap-8 rounded-2xl p-5 sm:p-8">
               <div>
                 <p className="text-sm uppercase tracking-[0.16em] text-muted">
                   {t.contact.directTitle}

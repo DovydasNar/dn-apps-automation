@@ -15,9 +15,9 @@ export function About() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(52,211,153,0.07),transparent_50%)]" />
       <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
         <FadeIn>
-          <div className="glass glow-border rounded-2xl p-7 sm:p-10 lg:p-12">
+          <div className="glass glow-border min-w-0 rounded-2xl p-5 sm:p-10 lg:p-12">
             <SectionHeading title={t.about.title} />
-            <p className="max-w-3xl text-lg leading-relaxed text-muted sm:text-xl">
+            <p className="max-w-3xl text-base leading-relaxed text-muted break-words sm:text-xl">
               {t.about.text}
             </p>
 

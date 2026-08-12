@@ -60,6 +60,16 @@ function normalizePortfolioProject(
   };
 }
 
+function isStaleContactSubmitted(value: string) {
+  const normalized = value.toLowerCase();
+  return (
+    normalized.includes("el. pašto klientas") ||
+    normalized.includes("email client") ||
+    normalized.includes("atidaromas") ||
+    normalized.includes("opening your")
+  );
+}
+
 function normalizeLocale(locale: Dictionary, defaults: Dictionary): Dictionary {
   const fallbackProjects = defaults.portfolio.projects;
   const rawProjects = Array.isArray(locale.portfolio.projects)
@@ -76,8 +86,22 @@ function normalizeLocale(locale: Dictionary, defaults: Dictionary): Dictionary {
         )
       : fallbackProjects.map((project) => ({ ...project }));
 
+  const submitted =
+    typeof locale.contact.submitted === "string" &&
+    locale.contact.submitted.trim() &&
+    !isStaleContactSubmitted(locale.contact.submitted)
+      ? locale.contact.submitted
+      : defaults.contact.submitted;
+
   return {
     ...locale,
+    contact: {
+      ...locale.contact,
+      submitting:
+        locale.contact.submitting?.trim() || defaults.contact.submitting,
+      submitted,
+      error: locale.contact.error?.trim() || defaults.contact.error,
+    },
     portfolio: {
       title: locale.portfolio.title || defaults.portfolio.title,
       subtitle: locale.portfolio.subtitle || defaults.portfolio.subtitle,

@@ -28,15 +28,15 @@ export function Services() {
           {t.services.items.map((item, index) => {
             const Icon = icons[index] ?? Workflow;
             return (
-              <FadeIn key={item.title} as="li" delay={index * 0.08}>
-                <article className="glass glow-border group h-full rounded-2xl p-6 sm:p-7">
+              <FadeIn key={item.title} as="li" className="h-full" delay={index * 0.08}>
+                <article className="glass glow-border group h-full min-w-0 rounded-2xl p-5 sm:p-7">
                   <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent transition group-hover:border-accent/50 group-hover:shadow-[0_0_24px_rgba(34,211,238,0.35)]">
                     <Icon size={20} strokeWidth={1.75} />
                   </div>
-                  <h3 className="text-xl font-semibold tracking-tight text-foreground">
+                  <h3 className="text-xl font-semibold tracking-tight text-foreground break-words">
                     {item.title}
                   </h3>
-                  <p className="mt-3 text-base leading-relaxed text-muted">
+                  <p className="mt-3 text-base leading-relaxed text-muted break-words">
                     {item.description}
                   </p>
                 </article>
