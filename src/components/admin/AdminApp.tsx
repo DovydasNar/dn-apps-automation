@@ -309,7 +309,7 @@ export function AdminApp() {
                 }
               />
               <AdminField
-                label="El. paštas (mailto)"
+                label="El. paštas (kontaktų forma + viešas kontaktas)"
                 value={content.settings.email}
                 onChange={(email) =>
                   setContent((prev) => ({

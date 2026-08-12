@@ -50,30 +50,42 @@ function TelegramIcon({ size = 18 }: { size?: number }) {
 
 export function Contact() {
   const { t, settings } = useLanguage();
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
   const emailUrl = settings.email ? `mailto:${settings.email}` : undefined;
   const phoneHref = settings.phone
     ? `tel:${settings.phone.replace(/\s+/g, "")}`
     : undefined;
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!emailUrl) return;
+    if (status === "sending") return;
 
     const form = event.currentTarget;
     const data = new FormData(form);
-    const name = String(data.get("name") ?? "");
-    const email = String(data.get("email") ?? "");
-    const message = String(data.get("message") ?? "");
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
 
-    const subject = encodeURIComponent(`${t.contact.mailSubject}: ${name}`);
-    const body = encodeURIComponent(
-      `${t.contact.mailBodyName}: ${name}\n${t.contact.mailBodyEmail}: ${email}\n\n${message}`,
-    );
+    setStatus("sending");
 
-    window.location.href = `${emailUrl}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
-    form.reset();
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (!response.ok) {
+        throw new Error("send_failed");
+      }
+
+      setStatus("sent");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   }
 
   const contacts = [
@@ -198,15 +210,19 @@ export function Contact() {
               <div className="mt-6 flex flex-wrap items-center gap-4">
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-accent/15 px-6 py-3 text-sm font-medium text-accent shadow-[0_0_28px_rgba(34,211,238,0.22)] transition hover:border-accent hover:bg-accent/25 hover:shadow-[0_0_40px_rgba(34,211,238,0.4)]"
+                  disabled={status === "sending"}
+                  className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-accent/15 px-6 py-3 text-sm font-medium text-accent shadow-[0_0_28px_rgba(34,211,238,0.22)] transition hover:border-accent hover:bg-accent/25 hover:shadow-[0_0_40px_rgba(34,211,238,0.4)] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {t.contact.submit}
+                  {status === "sending" ? t.contact.submitting : t.contact.submit}
                   <Send size={16} />
                 </button>
-                {submitted ? (
+                {status === "sent" ? (
                   <p className="text-sm text-accent-secondary">
                     {t.contact.submitted}
                   </p>
+                ) : null}
+                {status === "error" ? (
+                  <p className="text-sm text-red-400">{t.contact.error}</p>
                 ) : null}
               </div>
             </form>

@@ -79,9 +79,23 @@ Nukopijuok `.env.example` → `.env.local` ir užpildyk:
 | `ADMIN_SECRET` | Taip | Cookie parašo secret (ilgas random string) |
 | `UPSTASH_REDIS_REST_URL` | Taip (Vercel) | Upstash REST URL |
 | `UPSTASH_REDIS_REST_TOKEN` | Taip (Vercel) | Upstash REST token |
+| `RESEND_API_KEY` | Taip (kontaktų formai) | Resend API raktas žinučių siuntimui |
+| `CONTACT_FROM_EMAIL` | Ne | Siuntėjo adresas (po domain verify), pvz. `DN Apps <hello@domain.com>` |
+| `CONTACT_TO_EMAIL` | Ne | Jei nenurodyta — naudojamas admin `settings.email` |
+| `NEXT_PUBLIC_SITE_URL` | Ne | Viešas URL Open Graph nuorodoms |
 
 Lokaliai Redis **nebūtinas** (naudojamas JSON failas).  
 Vercel’e Redis **reikalingas**, jei nori redaguoti turinį online.
+
+### Kontaktų forma (be mailto)
+
+Forma siunčia `POST /api/contact` → Resend → tavo el. paštas (admin nustatymuose).
+
+1. Susikurk paskyrą: https://resend.com  
+2. Sukurk API key ir įrašyk `RESEND_API_KEY` į `.env.local` / Vercel.  
+3. Admin → nustatyk savo realų el. paštą (ne `example.com`).  
+4. Production’e patvirtink domeną Resend ir nustatyk `CONTACT_FROM_EMAIL`.  
+   Be domain verify Resend leidžia siųsti tik į tavo Resend paskyros el. paštą.
 
 ---
 

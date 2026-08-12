@@ -55,7 +55,9 @@ export type Dictionary = {
     };
     messagePlaceholder: string;
     submit: string;
+    submitting: string;
     submitted: string;
+    error: string;
     directTitle: string;
     directText: string;
     emailLabel: string;
@@ -205,7 +207,9 @@ export const defaultContent: SiteContent = {
         },
         messagePlaceholder: "Trumpai apie poreikį, terminus ir tikslą...",
         submit: "Siųsti žinutę",
-        submitted: "Atidaromas el. pašto klientas…",
+        submitting: "Siunčiama…",
+        submitted: "Žinutė išsiųsta! Greitai susisieksiu.",
+        error: "Nepavyko išsiųsti. Bandykite dar kartą arba parašykite tiesiogiai el. paštu.",
         directTitle: "Tiesioginiai kontaktai",
         directText: "Rašykite el. paštu, skambinkite arba susisiekite per socialinius kanalus.",
         emailLabel: "El. paštas",
@@ -317,7 +321,9 @@ export const defaultContent: SiteContent = {
         },
         messagePlaceholder: "Briefly share the need, timeline, and goal...",
         submit: "Send message",
-        submitted: "Opening your email client…",
+        submitting: "Sending…",
+        submitted: "Message sent! I’ll get back to you soon.",
+        error: "Could not send. Please try again or email me directly.",
         directTitle: "Direct contacts",
         directText: "Email me, call me, or reach out through social channels.",
         emailLabel: "Email",

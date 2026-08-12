@@ -9,13 +9,38 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000");
+
+const title = "DN Apps & Automation | Portfolio";
+const description =
+  "I automate processes and build tools that save your business time. Web scraping, bots, platforms, and mobile apps.";
+
 export const metadata: Metadata = {
-  title: "DN Apps & Automation | Portfolio",
-  description:
-    "I automate processes and build tools that save your business time. Web scraping, bots, platforms, and mobile apps.",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: [{ url: "/logo.png", type: "image/png" }],
+    apple: [{ url: "/logo.png", type: "image/png" }],
+  },
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    locale: "lt_LT",
+    alternateLocale: ["en_US"],
+    siteName: "DN Apps & Automation",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
   },
 };
 
